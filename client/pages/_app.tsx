@@ -14,7 +14,7 @@ import Head from 'next/head'
 
 import setting from '../setting'
 
-export default function MyApp ({ Component, pageProps }: AppProps) {
+export default function MyApp ({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <>
       <Head>

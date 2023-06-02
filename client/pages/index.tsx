@@ -4,7 +4,7 @@ import Layout from '../components/Layout'
 import pages from '../pages'
 import setting from '../setting'
 
-export default function Home () {
+export default function Home (): JSX.Element {
   return (
     <Layout menu={false} footer={false}>
       <div id='Index'>

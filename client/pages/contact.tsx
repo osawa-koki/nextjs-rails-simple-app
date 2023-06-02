@@ -15,7 +15,7 @@ interface IContact {
 
 const fetcher = async url => await fetch(url).then(async r => await r.json())
 
-export default function ContactPage () {
+export default function ContactPage (): JSX.Element {
   const [page, setPage] = useState(1)
 
   const [title, setTitle] = useState('')
