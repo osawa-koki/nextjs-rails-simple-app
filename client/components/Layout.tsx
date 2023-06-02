@@ -10,7 +10,7 @@ interface Props {
   footer?: boolean
 }
 
-const Layout = ({ children, title = setting.title, menu = true, footer = true }: Props) => (
+const Layout = ({ children, title = setting.title, menu = true, footer = true }: Props): JSX.Element => (
   <div>
     <Head>
       <title>{title}</title>

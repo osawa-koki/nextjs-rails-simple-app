@@ -4,6 +4,8 @@ import useSWR from 'swr'
 import { Alert, Button, Form, Table } from 'react-bootstrap'
 import Layout from '../components/Layout'
 import setting from '../setting'
+import { isAbsent, isPresent } from '../src/util'
+import { emptyFunction } from '../src/const'
 
 interface IContact {
   id: number
@@ -13,7 +15,7 @@ interface IContact {
   updated_at: Date
 }
 
-const fetcher = async url => await fetch(url).then(async r => await r.json())
+const fetcher = async (url: string): Promise<any> => await fetch(url).then(async r => await r.json())
 
 export default function ContactPage (): JSX.Element {
   const [page, setPage] = useState(1)
@@ -39,7 +41,7 @@ export default function ContactPage (): JSX.Element {
     dedupingInterval: 10000
   })
 
-  const Reload = () => {
+  const Reload = (): void => {
     mutate()
   }
 
@@ -47,11 +49,11 @@ export default function ContactPage (): JSX.Element {
     <Layout>
       <div id="Contact">
         {
-          error
+          isPresent(error)
             ? <Alert variant="danger" className="m-3">Error: {error.message}</Alert>
-            : !contacts
-                ? <Alert variant="warning" className="m-3">Loading...</Alert>
-                : <>
+            : isAbsent(contacts)
+              ? <Alert variant="warning" className="m-3">Loading...</Alert>
+              : <>
                 <div className="w-100 overflow-auto">
                   <Table>
                     <thead>
@@ -63,19 +65,19 @@ export default function ContactPage (): JSX.Element {
                       </tr>
                     </thead>
                     <tbody>
-                      {contacts.contacts && Array.from({ length: 5 }).map((_, index) => (
+                      {isPresent(contacts.contacts) && Array.from({ length: 5 }).map((_, index) => (
                         <tr key={index}>
-                          {contacts.contacts[index]
+                          {isPresent(contacts.contacts[index])
                             ? (
                             <>
                               <td>{contacts.contacts[index].id}</td>
                               <td>{contacts.contacts[index].title}</td>
                               <td>{contacts.contacts[index].content}</td>
-                              <td><Button variant="outline-danger" size="sm" onClick={async () => {
+                              <td><Button variant="outline-danger" size="sm" onClick={() => {
                                 if (!confirm('Delete???')) return
-                                await fetch(`${setting.apiPath}/api/contact/${contacts.contacts[index].id}`, {
+                                fetch(`${setting.apiPath}/api/contact/${contacts.contacts[index].id}`, {
                                   method: 'DELETE'
-                                })
+                                }).then(emptyFunction).catch(emptyFunction)
                                 mutate()
                               }}>削除</Button></td>
                             </>
@@ -90,13 +92,13 @@ export default function ContactPage (): JSX.Element {
                 </div>
                 <div className="mt-3 d-flex justify-content-between">
                   <Button variant="success" onClick={() => {
-                    if (contacts.pagination.prev_page) {
+                    if (isPresent(contacts.pagination.prev_page)) {
                       setPage(page - 1)
                     }
                   }} className="d-block m-auto" size="sm" disabled={contacts.pagination.prev_page === null}>前へ</Button>
                   <Button variant="success" onClick={Reload} className="d-block m-auto" size="sm">再読み込み</Button>
                   <Button variant="success" onClick={() => {
-                    if (contacts.pagination.next_page) {
+                    if (isPresent(contacts.pagination.next_page)) {
                       setPage(page + 1)
                     }
                   }} className="d-block m-auto" size="sm" disabled={contacts.pagination.next_page === null}>次へ</Button>
@@ -127,8 +129,8 @@ export default function ContactPage (): JSX.Element {
                       <Form.Label>内容</Form.Label>
                       <Form.Control as="textarea" rows={3} placeholder="内容" value={content} onChange={(e) => { setContent(e.target.value) }} />
                     </Form.Group>
-                    <Button variant="primary" className="d-block mt-3 m-auto" onClick={async () => {
-                      await fetch(`${setting.apiPath}/api/contact`, {
+                    <Button variant="primary" className="d-block mt-3 m-auto" onClick={() => {
+                      fetch(`${setting.apiPath}/api/contact`, {
                         method: 'POST',
                         headers: {
                           'Content-Type': 'application/json'
@@ -137,16 +139,16 @@ export default function ContactPage (): JSX.Element {
                           title,
                           content
                         })
-                      })
+                      }).then(emptyFunction).catch(emptyFunction)
                       mutate()
                     }}>送信</Button>
                   </Form>
                 </div>
-                <Button variant="outline-danger" className="d-block mt-3 m-auto w-100" size="sm" onClick={async () => {
+                <Button variant="outline-danger" className="d-block mt-3 m-auto w-100" size="sm" onClick={() => {
                   if (!confirm('Delete All???')) return
-                  await fetch(`${setting.apiPath}/api/contact/-1`, {
+                  fetch(`${setting.apiPath}/api/contact/-1`, {
                     method: 'DELETE'
-                  })
+                  }).then(emptyFunction).catch(emptyFunction)
                   mutate()
                 }}>全削除</Button>
               </>
