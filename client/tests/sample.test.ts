@@ -1,4 +1,3 @@
-export {}
 
 describe('sample', () => {
   test('1 + 1 = 2', () => {
