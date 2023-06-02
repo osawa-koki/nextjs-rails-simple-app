@@ -1,20 +1,20 @@
-import React from 'react';
-import { AppProps } from 'next/app';
+import React from 'react'
+import { type AppProps } from 'next/app'
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-import '../styles/styles.scss';
-import '../styles/menu.scss';
+import '../styles/styles.scss'
+import '../styles/menu.scss'
 
-import '../styles/index.scss';
-import '../styles/about.scss';
-import '../styles/contact.scss';
+import '../styles/index.scss'
+import '../styles/about.scss'
+import '../styles/contact.scss'
 
-import Head from 'next/head';
+import Head from 'next/head'
 
-import setting from '../setting';
+import setting from '../setting'
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp ({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
@@ -25,5 +25,5 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <Component {...pageProps} />
     </>
-  );
+  )
 };

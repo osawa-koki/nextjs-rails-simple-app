@@ -1,14 +1,14 @@
-import React, { ReactNode } from 'react';
-import Head from 'next/head';
-import setting from '../setting';
-import Menu from './Menu';
+import React, { type ReactNode } from 'react'
+import Head from 'next/head'
+import setting from '../setting'
+import Menu from './Menu'
 
-type Props = {
-  children?: ReactNode,
-  title?: string,
-  menu?: boolean,
-  footer?: boolean,
-};
+interface Props {
+  children?: ReactNode
+  title?: string
+  menu?: boolean
+  footer?: boolean
+}
 
 const Layout = ({ children, title = setting.title, menu = true, footer = true }: Props) => (
   <div>
@@ -23,6 +23,6 @@ const Layout = ({ children, title = setting.title, menu = true, footer = true }:
     </div>
     { footer && <footer><a href="https://github.com/osawa-koki" target='_blank' rel="noreferrer">@osawa-koki</a></footer> }
   </div>
-);
+)
 
-export default Layout;
+export default Layout
