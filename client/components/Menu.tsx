@@ -1,31 +1,29 @@
-import React from "react";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import pages from "../pages";
-import { Button } from "react-bootstrap";
-import { BsGearFill } from "react-icons/bs";
-import setting from "../setting";
+import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
+import pages from '../pages'
+import { Button } from 'react-bootstrap'
+import { BsGearFill } from 'react-icons/bs'
+import setting from '../setting'
 
-function Menu() {
-
-  const [current_page, setCurrentPage] = useState<string | null>(null);
-  const [menu_open, setMenuOpen] = useState<boolean>(false);
+function Menu (): JSX.Element {
+  const [currentPage, setCurrentPage] = useState<string | null>(null)
+  const [menuOpen, setMenuOpen] = useState<boolean>(false)
 
   useEffect(() => {
-    setCurrentPage(window.location.pathname);
-  }, []);
+    setCurrentPage(window.location.pathname)
+  }, [])
 
-  const PageChanged = () => {
-    setCurrentPage(window.location.pathname);
-  };
+  const PageChanged = (): void => {
+    setCurrentPage(window.location.pathname)
+  }
 
   return (
     <>
-      <div id="Menu" className={menu_open ? 'on' : ''}>
+      <div id="Menu" className={menuOpen ? 'on' : ''}>
       {
         pages.map((page, index: number) => {
           return (
-            <Link key={index} href={page.path} className={`btn ${current_page === `${setting.basePath}${page.path}` ? 'btn-primary' : ''}`} onClick={PageChanged}>
+            <Link key={index} href={page.path} className={`btn ${currentPage === `${setting.basePath}${page.path}` ? 'btn-primary' : ''}`} onClick={PageChanged}>
               {page.emoji}&nbsp;{page.name}
             </Link>
           )
@@ -33,11 +31,11 @@ function Menu() {
       }
       </div>
       <div id="ToMenu">
-        <Button id="Closer" variant="primary" className={`btn-close btn-close-white ${menu_open ? 'on' : ''}`} onClick={() => {setMenuOpen(false)}}></Button>
-        <BsGearFill id="Opener" className={menu_open ? 'off' : ''} onClick={() => {setMenuOpen(true)}}></BsGearFill>
+        <Button id="Closer" variant="primary" className={`btn-close btn-close-white ${menuOpen ? 'on' : ''}`} onClick={() => { setMenuOpen(false) }}></Button>
+        <BsGearFill id="Opener" className={menuOpen ? 'off' : ''} onClick={() => { setMenuOpen(true) }}></BsGearFill>
       </div>
     </>
-  );
+  )
 };
 
-export default Menu;
+export default Menu
