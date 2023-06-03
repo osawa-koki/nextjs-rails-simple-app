@@ -95,13 +95,13 @@ export default function ContactPage (): JSX.Element {
                     if (isPresent(contacts.pagination.prev_page)) {
                       setPage(page - 1)
                     }
-                  }} className="d-block m-auto" size="sm" disabled={contacts.pagination.prev_page === null}>前へ</Button>
+                  }} className="d-block m-auto" size="sm" disabled={isAbsent(contacts.pagination.prev_page)}>前へ</Button>
                   <Button variant="success" onClick={Reload} className="d-block m-auto" size="sm">再読み込み</Button>
                   <Button variant="success" onClick={() => {
                     if (isPresent(contacts.pagination.next_page)) {
                       setPage(page + 1)
                     }
-                  }} className="d-block m-auto" size="sm" disabled={contacts.pagination.next_page === null}>次へ</Button>
+                  }} className="d-block m-auto" size="sm" disabled={isAbsent(contacts.pagination.next_page)}>次へ</Button>
                 </div>
                 <Table className="border mt-3">
                   <tbody>
