@@ -120,6 +120,8 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
+    nokogiri (1.14.2-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.14.2-x64-mingw-ucrt)
       racc (~> 1.4)
     parallel (1.22.1)
@@ -182,6 +184,7 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
     ruby-progressbar (1.13.0)
+    sqlite3 (1.6.2-arm64-darwin)
     sqlite3 (1.6.2-x64-mingw-ucrt)
     thor (1.2.1)
     timeout (0.3.2)
@@ -196,6 +199,7 @@ GEM
     zeitwerk (2.6.7)
 
 PLATFORMS
+  arm64-darwin-22
   x64-mingw-ucrt
 
 DEPENDENCIES
@@ -211,7 +215,7 @@ DEPENDENCIES
   tzinfo-data
 
 RUBY VERSION
-   ruby 3.2.1p31
+   ruby 3.2.2p53
 
 BUNDLED WITH
    2.4.8
