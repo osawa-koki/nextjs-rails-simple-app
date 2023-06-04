@@ -8,7 +8,7 @@ export default function Home (): JSX.Element {
   return (
     <Layout menu={false} footer={false}>
       <div id='Index'>
-        <h1>Hello SWR 🦢🦢🦢</h1>
+        <h1>{setting.title}</h1>
         <img id='Logo' src={`${setting.basePath}/tako.png`} alt="Logo" />
         <div id="IndexLink">
         {
