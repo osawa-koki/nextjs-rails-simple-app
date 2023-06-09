@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Api::ContactControllerTest < ActionDispatch::IntegrationTest
+class Api::MakerControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end

@@ -7,15 +7,16 @@ import setting from '../setting'
 import { isAbsent, isPresent } from '../src/util'
 import { emptyFunction } from '../src/const'
 
-interface IContact {
+interface IMaker {
   id: number
-  title: string
-  content: string
+  name: string
+  country: string
+  founding_date: Date
   created_at: Date
   updated_at: Date
 }
 
-const fetcher = async (url: string): Promise<any> => await fetch(url).then(async r => await r.json())
+const fetcher = async (url: string): Promise<any> => await fetch(url).then(async r => r.ok ? await r.json() : null)
 
 export default function ContactPage (): JSX.Element {
   const [page, setPage] = useState(1)
@@ -23,9 +24,9 @@ export default function ContactPage (): JSX.Element {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
 
-  const { data: contacts, error, mutate }: {
+  const { data, error, mutate }: {
     data: {
-      contacts: IContact[]
+      makers: IMaker[]
       pagination: {
         current_page: number
         next_page: number | null
@@ -36,7 +37,7 @@ export default function ContactPage (): JSX.Element {
     }
     error: any
     mutate: any
-  } = useSWR(`${setting.apiPath}/api/contact?page=${page}`, fetcher, {
+  } = useSWR(`${setting.apiPath}/api/maker?page=${page}`, fetcher, {
     revalidateOnFocus: false,
     dedupingInterval: 10000
   })
@@ -51,7 +52,7 @@ export default function ContactPage (): JSX.Element {
         {
           isPresent(error)
             ? <Alert variant="danger" className="m-3">Error: {error.message}</Alert>
-            : isAbsent(contacts)
+            : isAbsent(data)
               ? <Alert variant="warning" className="m-3">Loading...</Alert>
               : <>
                 <div className="w-100 overflow-auto">
@@ -59,23 +60,24 @@ export default function ContactPage (): JSX.Element {
                     <thead>
                       <tr>
                         <th>id</th>
-                        <th>title</th>
-                        <th>content</th>
-                        <th>delete</th>
+                        <th>name</th>
+                        <th>country</th>
+                        <th>founding_date</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {isPresent(contacts.contacts) && Array.from({ length: 5 }).map((_, index) => (
+                      {isPresent(data.makers) && Array.from({ length: 5 }).map((_, index) => (
                         <tr key={index}>
-                          {isPresent(contacts.contacts[index])
+                          {isPresent(data.makers[index])
                             ? (
                             <>
-                              <td>{contacts.contacts[index].id}</td>
-                              <td>{contacts.contacts[index].title}</td>
-                              <td>{contacts.contacts[index].content}</td>
+                              <td>{data.makers[index].id}</td>
+                              <td>{data.makers[index].name}</td>
+                              <td>{data.makers[index].country}</td>
+                              <td>{data.makers[index].founding_date.toString()}</td>
                               <td><Button variant="outline-danger" size="sm" onClick={() => {
                                 if (!confirm('Delete???')) return
-                                fetch(`${setting.apiPath}/api/contact/${contacts.contacts[index].id}`, {
+                                fetch(`${setting.apiPath}/api/contact/${data.makers[index].id}`, {
                                   method: 'DELETE'
                                 }).then(emptyFunction).catch(emptyFunction)
                                 mutate()
@@ -92,30 +94,30 @@ export default function ContactPage (): JSX.Element {
                 </div>
                 <div className="mt-3 d-flex justify-content-between">
                   <Button variant="success" onClick={() => {
-                    if (isPresent(contacts.pagination.prev_page)) {
+                    if (isPresent(data.pagination.prev_page)) {
                       setPage(page - 1)
                     }
-                  }} className="d-block m-auto" size="sm" disabled={isAbsent(contacts.pagination.prev_page)}>前へ</Button>
+                  }} className="d-block m-auto" size="sm" disabled={isAbsent(data.pagination.prev_page)}>前へ</Button>
                   <Button variant="success" onClick={Reload} className="d-block m-auto" size="sm">再読み込み</Button>
                   <Button variant="success" onClick={() => {
-                    if (isPresent(contacts.pagination.next_page)) {
+                    if (isPresent(data.pagination.next_page)) {
                       setPage(page + 1)
                     }
-                  }} className="d-block m-auto" size="sm" disabled={isAbsent(contacts.pagination.next_page)}>次へ</Button>
+                  }} className="d-block m-auto" size="sm" disabled={isAbsent(data.pagination.next_page)}>次へ</Button>
                 </div>
                 <Table className="border mt-3">
                   <tbody>
                     <tr>
                       <td>現在のページ</td>
-                      <td>{contacts.pagination.current_page}</td>
+                      <td>{data.pagination.current_page}</td>
                     </tr>
                     <tr>
                       <td>総ページ数</td>
-                      <td>{contacts.pagination.total_pages}</td>
+                      <td>{data.pagination.total_pages}</td>
                     </tr>
                     <tr>
                       <td>総件数</td>
-                      <td>{contacts.pagination.total_count}</td>
+                      <td>{data.pagination.total_count}</td>
                     </tr>
                   </tbody>
                 </Table>
