@@ -1,12 +1,12 @@
 {
-  "name": "learning-swr",
+  "name": "nextjs-rails-simple-app",
   "description": "My favorite Next.js project",
   "version": "1.0.0",
   "author": "osawa-koki",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/osawa-koki/learning-SWR.git"
+    "url": "https://github.com/osawa-koki/nextjs-rails-simple-app.git"
   },
   "engines": {
     "node": ">=16.0.0",
