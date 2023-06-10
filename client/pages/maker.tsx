@@ -61,6 +61,7 @@ export default function ContactPage (): JSX.Element {
                         <th>name</th>
                         <th>country</th>
                         <th>founding_date</th>
+                        <th>delete</th>
                       </tr>
                     </thead>
                     <tbody>
