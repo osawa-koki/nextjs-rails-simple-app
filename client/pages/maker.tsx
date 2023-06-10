@@ -77,7 +77,7 @@ export default function ContactPage (): JSX.Element {
                               <td>{data.makers[index].founding_date.toString()}</td>
                               <td><Button variant="outline-danger" size="sm" onClick={() => {
                                 if (!confirm('Delete???')) return
-                                fetch(`${setting.apiPath}/api/contact/${data.makers[index].id}`, {
+                                fetch(`${setting.apiPath}/api/maker/${data.makers[index].id}`, {
                                   method: 'DELETE'
                                 }).then(emptyFunction).catch(emptyFunction)
                                 mutate()
@@ -132,7 +132,7 @@ export default function ContactPage (): JSX.Element {
                       <Form.Control as="textarea" rows={3} placeholder="内容" value={content} onChange={(e) => { setContent(e.target.value) }} />
                     </Form.Group>
                     <Button variant="primary" className="d-block mt-3 m-auto" onClick={() => {
-                      fetch(`${setting.apiPath}/api/contact`, {
+                      fetch(`${setting.apiPath}/api/maker`, {
                         method: 'POST',
                         headers: {
                           'Content-Type': 'application/json'
@@ -148,7 +148,7 @@ export default function ContactPage (): JSX.Element {
                 </div>
                 <Button variant="outline-danger" className="d-block mt-3 m-auto w-100" size="sm" onClick={() => {
                   if (!confirm('Delete All???')) return
-                  fetch(`${setting.apiPath}/api/contact/-1`, {
+                  fetch(`${setting.apiPath}/api/maker/-1`, {
                     method: 'DELETE'
                   }).then(emptyFunction).catch(emptyFunction)
                   mutate()
