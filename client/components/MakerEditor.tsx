@@ -91,8 +91,9 @@ export default function MakerEditor (props: MakerEditorProps): JSX.Element {
             }).then(async (response: Response) => {
               if (!response.ok) throw new Error((await response.json()).message)
               afterSubmit()
-              NotificationManager.success(isNew ?
-                'メーカーを作成しました。' : 'メーカーを更新しました。')
+              NotificationManager.success(isNew
+                ? 'メーカーを作成しました。'
+                : 'メーカーを更新しました。')
             }).catch((error: Error) => {
               NotificationManager.error(error.message)
             })
