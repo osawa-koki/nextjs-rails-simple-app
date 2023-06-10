@@ -93,12 +93,12 @@ export default function ContactPage (): JSX.Element {
                   </Table>
                 </div>
                 <Pagination
-                  set_page={setPage}
-                  prev_page={data.pagination.prev_page}
-                  next_page={data.pagination.next_page}
-                  current_page={data.pagination.current_page}
-                  total_pages={data.pagination.total_pages}
-                  total_count={data.pagination.total_count}
+                  setPage={setPage}
+                  prevPage={data.pagination.prev_page}
+                  nextPage={data.pagination.next_page}
+                  currentPage={data.pagination.current_page}
+                  totalPages={data.pagination.total_pages}
+                  totalCount={data.pagination.total_count}
                   reload={Reload}
                 />
                 <div className="mt-3 p-3 border bg-light">
