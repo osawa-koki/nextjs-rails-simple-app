@@ -4,7 +4,7 @@ import { Button, Form } from 'react-bootstrap'
 import setting from '../setting'
 import { type IMaker } from '../pages/maker'
 import { isAbsent, isPresent } from '../src/util'
-import dayjs, { Dayjs } from 'dayjs'
+import dayjs, { type Dayjs } from 'dayjs'
 
 const customStyles = {
   overlay: {
@@ -73,7 +73,7 @@ export default function MakerEditor (props: MakerEditorProps): JSX.Element {
         <Button variant="primary" className="d-block mt-3 m-auto" onClick={() => {
           const isNew = isAbsent(targetMaker)
           const method = isNew ? 'POST' : 'PATCH'
-          const uri = isNew ? `${setting.apiPath}/api/maker` : `${setting.apiPath}/api/maker/${targetMaker?.id}`
+          const uri = isNew ? `${setting.apiPath}/api/maker` : `${setting.apiPath}/api/maker/${targetMaker.id}`
           fetch(uri, {
             method,
             headers: {
