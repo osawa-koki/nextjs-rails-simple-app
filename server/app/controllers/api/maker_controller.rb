@@ -18,7 +18,7 @@ class Api::MakerController < ApplicationController
     @maker = Maker.new(maker_params)
     unless @maker.valid?
       render json: {
-        message: 'Validation Failed.',
+        message: 'Validation Failed.'
       }, status: :unprocessable_entity
       return
     end
