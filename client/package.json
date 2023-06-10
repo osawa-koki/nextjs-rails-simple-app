@@ -18,8 +18,6 @@
     "develop": "next",
     "build": "next build && next export -o ./dist",
     "test": "jest",
-    "start": "next start",
-    "type-check": "tsc",
     "lint:check": "eslint .",
     "lint:fix": "eslint . --fix"
   },
