@@ -5,7 +5,7 @@ import { Alert, Button, Form, Table } from 'react-bootstrap'
 import Layout from '../components/Layout'
 import setting from '../setting'
 import { isAbsent, isPresent } from '../src/util'
-import { emptyFunction } from '../src/const'
+import { emptyFunction, fetcher } from '../src/const'
 
 interface IMaker {
   id: number
@@ -15,8 +15,6 @@ interface IMaker {
   created_at: Date
   updated_at: Date
 }
-
-const fetcher = async (url: string): Promise<any> => await fetch(url).then(async r => r.ok ? await r.json() : null)
 
 export default function ContactPage (): JSX.Element {
   const [page, setPage] = useState(1)
