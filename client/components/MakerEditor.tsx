@@ -92,9 +92,9 @@ export default function MakerEditor (props: MakerEditorProps): JSX.Element {
               if (!response.ok) throw new Error((await response.json()).message)
               afterSubmit()
               NotificationManager.success(isNew ?
-                'メーカーを作成しました。' : 'メーカーを更新しました。', '成功')
+                'メーカーを作成しました。' : 'メーカーを更新しました。')
             }).catch((error: Error) => {
-              NotificationManager.error(error.message, 'エラー')
+              NotificationManager.error(error.message)
             })
           }}>送信</Button>
         </Form>

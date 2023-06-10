@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { NotificationManager } from 'react-notifications'
 
 import useSWR from 'swr'
 import { Alert, Button, Table } from 'react-bootstrap'
@@ -86,7 +87,11 @@ export default function ContactPage (): JSX.Element {
                                 if (!confirm('Delete???')) return
                                 fetch(`${setting.apiPath}/api/maker/${data.makers[index].id}`, {
                                   method: 'DELETE'
-                                }).then(emptyFunction).catch(emptyFunction)
+                                }).then(() => {
+                                  NotificationManager.success('データを削除しました。')
+                                }).catch(() => {
+                                  NotificationManager.error('データの削除に失敗しました。')
+                                })
                                 mutate()
                               }}>削除</Button></td>
                             </>
@@ -131,8 +136,10 @@ export default function ContactPage (): JSX.Element {
                     method: 'DELETE'
                   }).then(() => {
                     mutate()
+                    NotificationManager.success('すべてのデータを削除しました。')
                   }).catch(() => {
                     alert('Error')
+                    NotificationManager.error('データの削除に失敗しました。')
                   })
                 }}>全削除</Button>
               </>
