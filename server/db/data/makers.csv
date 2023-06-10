@@ -5,7 +5,17 @@ id,name,country,founding_date
 4,Apple,United States,1976-04-01
 5,Asus,Taiwan,1989-04-02
 6,Acer,Taiwan,1976-08-01
-7,Microsoft,United States,1975-04-04
-8,Toshiba,Japan,1875-07-01
+7,Toshiba,Japan,1875-07-01
+8,Microsoft,United States,1975-04-04
 9,Samsung,South Korea,1938-03-01
 10,IBM,United States,1911-06-16
+11,Sony,Japan,1946-05-07
+12,MSI,Taiwan,1986-08-04
+13,Intel,United States,1968-07-18
+14,Fujitsu,Japan,1935-06-20
+15,VAIO,Japan,1996-04-01
+16,Panasonic,Japan,1918-03-13
+17,LG,South Korea,1958-01-05
+18,Huawei,China,1987-09-15
+19,Razer,United States,2005-11-01
+20,Google,United States,1998-09-04
