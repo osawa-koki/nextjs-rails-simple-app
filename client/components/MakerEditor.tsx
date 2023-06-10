@@ -7,6 +7,8 @@ import { isAbsent, isPresent } from '../src/util'
 import dayjs, { type Dayjs } from 'dayjs'
 import { NotificationManager } from 'react-notifications'
 
+Modal.setAppElement('#Modal')
+
 const customStyles: Styles = {
   overlay: {
     zIndex: 999

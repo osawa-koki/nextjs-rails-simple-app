@@ -23,6 +23,7 @@ const Layout = ({ children, title = setting.title, menu = true, footer = true }:
       { menu ? <><main>{ children }</main><Menu /></> : children }
     </div>
     { footer && <footer><a href="https://github.com/osawa-koki" target='_blank' rel="noreferrer">@osawa-koki</a></footer> }
+    <div id='Modal'></div>
     <NotificationContainer />
   </div>
 )
