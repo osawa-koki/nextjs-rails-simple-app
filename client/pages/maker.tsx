@@ -6,7 +6,7 @@ import Layout from '../components/Layout'
 import setting from '../setting'
 import { isAbsent, isPresent } from '../src/util'
 import { emptyFunction, fetcher } from '../src/const'
-import Pagination from '../components/pagination'
+import Pagination from '../components/Pagination'
 
 interface IMaker {
   id: number
