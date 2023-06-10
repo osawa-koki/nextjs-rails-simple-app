@@ -15,11 +15,27 @@ class Api::MakerController < ApplicationController
   end
 
   def create
-    @maker = Maker.new(contact_params)
+    @maker = Maker.new(maker_params)
+    unless @maker.valid?
+      render json: {
+        message: 'Validation Failed.',
+      }, status: :unprocessable_entity
+      return
+    end
+
     if @maker.save
       render json: @maker
     else
       render json: @maker.errors
+    end
+  end
+
+  def update
+    @maker = Maker.find(params[:id])
+    if @maker.update(maker_params)
+      render json: @maker
+    else
+      render json: @maker.errors, status: :not_found
     end
   end
 
