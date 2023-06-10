@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Modal, { Styles } from 'react-modal'
+import Modal, { type Styles } from 'react-modal'
 import { Button, Form } from 'react-bootstrap'
 import setting from '../setting'
 import { type IMaker } from '../pages/maker'
@@ -73,8 +73,8 @@ export default function MakerEditor (props: MakerEditorProps): JSX.Element {
         <Button variant="primary" className="d-block mt-3 m-auto" onClick={() => {
           const isNew = isAbsent(targetMaker)
           const method = isNew ? 'POST' : 'PATCH'
-          // @ts-ignore: `targetMaker`がnullでないことを保証。
-          const uri = isNew ? `${setting.apiPath}/api/maker` : `${setting.apiPath}/api/maker/${targetMaker.id}`
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          const uri = isNew ? `${setting.apiPath}/api/maker` : `${setting.apiPath}/api/maker/${targetMaker!.id}`
           fetch(uri, {
             method,
             headers: {
