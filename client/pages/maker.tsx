@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 
 import useSWR from 'swr'
-import { Alert, Button, Form, Table } from 'react-bootstrap'
+import { Alert, Button, Table } from 'react-bootstrap'
 import Layout from '../components/Layout'
 import setting from '../setting'
 import { isAbsent, isPresent } from '../src/util'
 import { emptyFunction, fetcher } from '../src/const'
 import Pagination from '../components/Pagination'
+import MakerEditor from '../components/MakerEditor'
 
-interface IMaker {
+export interface IMaker {
   id: number
   name: string
   country: string
@@ -20,8 +21,8 @@ interface IMaker {
 export default function ContactPage (): JSX.Element {
   const [page, setPage] = useState(1)
 
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
+  const [showEditor, setShowEditor] = useState(false)
+  const [targetMaker, setTargetMaker] = useState<IMaker | null>(null)
 
   const { data, error, mutate }: {
     data: {
@@ -71,7 +72,13 @@ export default function ContactPage (): JSX.Element {
                           {isPresent(data.makers[index])
                             ? (
                             <>
-                              <td>{data.makers[index].id}</td>
+                              <td>
+                                <a onClick={(event: any) => {
+                                  event.preventDefault()
+                                  setTargetMaker(data.makers[index])
+                                  setShowEditor(true)
+                                }} href={`?target=${data.makers[index].id}`}>{data.makers[index].id}</a>
+                              </td>
                               <td>{data.makers[index].name}</td>
                               <td>{data.makers[index].country}</td>
                               <td>{data.makers[index].founding_date.toString()}</td>
@@ -101,37 +108,32 @@ export default function ContactPage (): JSX.Element {
                   totalCount={data.pagination.total_count}
                   reload={Reload}
                 />
-                <div className="mt-3 p-3 border bg-light">
-                  <Form>
-                    <Form.Group className="mt-3">
-                      <Form.Label>タイトル</Form.Label>
-                      <Form.Control type="text" placeholder="タイトル" value={title} onChange={(e) => { setTitle(e.target.value) }} />
-                    </Form.Group>
-                    <Form.Group className="mt-3">
-                      <Form.Label>内容</Form.Label>
-                      <Form.Control as="textarea" rows={3} placeholder="内容" value={content} onChange={(e) => { setContent(e.target.value) }} />
-                    </Form.Group>
-                    <Button variant="primary" className="d-block mt-3 m-auto" onClick={() => {
-                      fetch(`${setting.apiPath}/api/maker`, {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                          title,
-                          content
-                        })
-                      }).then(emptyFunction).catch(emptyFunction)
-                      mutate()
-                    }}>送信</Button>
-                  </Form>
-                </div>
+                {
+                  showEditor
+                    ? (
+                    <MakerEditor
+                      modalIsOpen={showEditor}
+                      closeModal={() => { setShowEditor(false) }}
+                      afterSubmit={() => { mutate(); setShowEditor(false) }}
+                      targetMaker={targetMaker}
+                    />
+                      )
+                    : (
+                    <Button variant="primary" className="d-block mt-3 m-auto w-100" onClick={() => {
+                      setShowEditor(true)
+                      setTargetMaker(null)
+                    }}>新規作成</Button>
+                      )
+                }
                 <Button variant="outline-danger" className="d-block mt-3 m-auto w-100" size="sm" onClick={() => {
                   if (!confirm('Delete All???')) return
                   fetch(`${setting.apiPath}/api/maker/-1`, {
                     method: 'DELETE'
-                  }).then(emptyFunction).catch(emptyFunction)
-                  mutate()
+                  }).then(() => {
+                    mutate()
+                  }).catch(() => {
+                    alert('Error')
+                  })
                 }}>全削除</Button>
               </>
         }
