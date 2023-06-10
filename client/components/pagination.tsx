@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Table } from 'react-bootstrap'
+import { Button, Form, Table } from 'react-bootstrap'
 import { isAbsent, isPresent } from '../src/util'
 
 type PaginationProps = {
@@ -28,18 +28,26 @@ export default function Pagination(props: PaginationProps) {
     <>
       <div className="mt-3 d-flex justify-content-between">
         <Button variant="success" onClick={() => {
-          if (isPresent(prev_page)) set_page(prev_page)
+          if (isPresent(prev_page)) set_page(prev_page!)
         }} className="d-block m-auto" size="sm" disabled={isAbsent(prev_page)}>前へ</Button>
         <Button variant="success" onClick={reload} className="d-block m-auto" size="sm">再読み込み</Button>
         <Button variant="success" onClick={() => {
-          if (isPresent(next_page)) set_page(next_page)
+          if (isPresent(next_page)) set_page(next_page!)
         }} className="d-block m-auto" size="sm" disabled={isAbsent(next_page)}>次へ</Button>
       </div>
       <Table className="border mt-3">
         <tbody>
           <tr>
             <td>現在のページ</td>
-            <td>{current_page}</td>
+            <td>
+            <Form.Select value={current_page} onChange={(event: {target: { value: string }}) => {
+              set_page(parseInt(event.target.value))
+            }}>
+              {Array.from(Array(total_pages).keys()).map((i) => (
+                <option key={i} value={i + 1}>{i + 1}</option>
+              ))}
+            </Form.Select>
+            </td>
           </tr>
           <tr>
             <td>総ページ数</td>
