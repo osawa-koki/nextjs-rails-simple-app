@@ -40,7 +40,7 @@ export default function Pagination(props: PaginationProps) {
           <tr>
             <td>現在のページ</td>
             <td>
-            <Form.Select value={current_page} onChange={(event: {target: { value: string }}) => {
+            <Form.Select value={current_page} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
               set_page(parseInt(event.target.value))
             }}>
               {Array.from(Array(total_pages).keys()).map((i) => (
