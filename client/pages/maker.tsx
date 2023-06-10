@@ -6,6 +6,7 @@ import Layout from '../components/Layout'
 import setting from '../setting'
 import { isAbsent, isPresent } from '../src/util'
 import { emptyFunction, fetcher } from '../src/const'
+import Pagination from '../components/pagination'
 
 interface IMaker {
   id: number
@@ -91,35 +92,15 @@ export default function ContactPage (): JSX.Element {
                     </tbody>
                   </Table>
                 </div>
-                <div className="mt-3 d-flex justify-content-between">
-                  <Button variant="success" onClick={() => {
-                    if (isPresent(data.pagination.prev_page)) {
-                      setPage(page - 1)
-                    }
-                  }} className="d-block m-auto" size="sm" disabled={isAbsent(data.pagination.prev_page)}>前へ</Button>
-                  <Button variant="success" onClick={Reload} className="d-block m-auto" size="sm">再読み込み</Button>
-                  <Button variant="success" onClick={() => {
-                    if (isPresent(data.pagination.next_page)) {
-                      setPage(page + 1)
-                    }
-                  }} className="d-block m-auto" size="sm" disabled={isAbsent(data.pagination.next_page)}>次へ</Button>
-                </div>
-                <Table className="border mt-3">
-                  <tbody>
-                    <tr>
-                      <td>現在のページ</td>
-                      <td>{data.pagination.current_page}</td>
-                    </tr>
-                    <tr>
-                      <td>総ページ数</td>
-                      <td>{data.pagination.total_pages}</td>
-                    </tr>
-                    <tr>
-                      <td>総件数</td>
-                      <td>{data.pagination.total_count}</td>
-                    </tr>
-                  </tbody>
-                </Table>
+                <Pagination
+                  set_page={setPage}
+                  prev_page={data.pagination.prev_page}
+                  next_page={data.pagination.next_page}
+                  current_page={data.pagination.current_page}
+                  total_pages={data.pagination.total_pages}
+                  total_count={data.pagination.total_count}
+                  reload={Reload}
+                />
                 <div className="mt-3 p-3 border bg-light">
                   <Form>
                     <Form.Group className="mt-3">
