@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+// @ts-expect-error: No types available.
 import { NotificationManager } from 'react-notifications'
 
 import useSWR from 'swr'

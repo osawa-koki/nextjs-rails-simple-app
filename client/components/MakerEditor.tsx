@@ -5,6 +5,7 @@ import setting from '../setting'
 import { type IMaker } from '../pages/maker'
 import { isAbsent, isPresent } from '../src/util'
 import dayjs, { type Dayjs } from 'dayjs'
+// @ts-expect-error: No types available.
 import { NotificationManager } from 'react-notifications'
 
 Modal.setAppElement('#Modal')
