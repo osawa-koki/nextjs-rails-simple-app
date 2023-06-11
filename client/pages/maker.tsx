@@ -20,7 +20,7 @@ export interface IMaker {
   updated_at: Date
 }
 
-export default function MakerPage (): JSX.Element {
+export default function ContactPage (): JSX.Element {
   const [page, setPage] = useState(1)
 
   const [showEditor, setShowEditor] = useState(false)
@@ -50,7 +50,7 @@ export default function MakerPage (): JSX.Element {
 
   return (
     <Layout>
-      <div id="Maker">
+      <div id="Contact">
         {
           isPresent(error)
             ? <Alert variant="danger" className="m-3">Error: {error.message}</Alert>
@@ -90,11 +90,10 @@ export default function MakerPage (): JSX.Element {
                                   method: 'DELETE'
                                 }).then(() => {
                                   NotificationManager.success('データを削除しました。')
-                                  mutate()
                                 }).catch(() => {
                                   NotificationManager.error('データの削除に失敗しました。')
-                                  mutate()
                                 })
+                                mutate()
                               }}>削除</Button></td>
                             </>
                               )
@@ -142,7 +141,6 @@ export default function MakerPage (): JSX.Element {
                   }).catch(() => {
                     alert('Error')
                     NotificationManager.error('データの削除に失敗しました。')
-                    mutate()
                   })
                 }}>全削除</Button>
               </>
