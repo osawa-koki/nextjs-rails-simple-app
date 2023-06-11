@@ -8,7 +8,7 @@ import { Alert, Button, Table } from 'react-bootstrap'
 import Layout from '../components/Layout'
 import setting from '../setting'
 import { isAbsent, isPresent } from '../src/util'
-import { fetcher } from '../src/const'
+import { emptyFunction, fetcher } from '../src/const'
 import Pagination from '../components/Pagination'
 import MakerEditor from '../components/MakerEditor'
 
