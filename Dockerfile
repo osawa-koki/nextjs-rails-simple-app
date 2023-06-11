@@ -12,5 +12,6 @@ COPY ./server/Gemfile ./server/Gemfile.lock ./
 RUN gem install bundler && bundle install
 COPY ./server .
 RUN rails RAILS_ENV=production db:migrate
+RUN rails RAILS_ENV=production db:seed
 COPY --from=client_build /src/dist ./public
 CMD bundle exec puma -e production -p 8000
