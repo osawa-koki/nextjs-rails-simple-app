@@ -1,5 +1,12 @@
 # nextjs-rails-simple-app
 
+## 実行方法
+
+```shell
+docker build -t nextjs-rails-simple-app .
+docker run -it -p 8000:8000 nextjs-rails-simple-app
+```
+
 ## 開発環境の構築
 
 | モジュール | バージョン |

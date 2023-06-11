@@ -1,11 +1,11 @@
-FROM node:18 as client_build
+FROM node:20 as client_build
 WORKDIR /src
 COPY ./client/package.json ./client/yarn.lock ./
 RUN yarn install
 COPY ./client .
 RUN yarn build
 
-FROM ruby:3.2.1 as server_build
+FROM ruby:3.2.3 as server_build
 WORKDIR /app
 EXPOSE 8000
 COPY ./server/Gemfile ./server/Gemfile.lock ./
