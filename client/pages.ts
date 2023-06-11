@@ -13,7 +13,7 @@ const pages = [
     emoji: '💓',
     path: '/merchandise/',
     name: 'Merchandise'
-  },
+  }
 ]
 
 export default pages

@@ -4,7 +4,6 @@ import { Button, Form } from 'react-bootstrap'
 import setting from '../setting'
 import { type IMerchandise } from '../pages/merchandise'
 import { isAbsent, isPresent } from '../src/util'
-import dayjs, { type Dayjs } from 'dayjs'
 // @ts-expect-error: No types available.
 import { NotificationManager } from 'react-notifications'
 
@@ -89,7 +88,7 @@ export default function MerchandiseEditor (props: MerchandiseEditorProps): JSX.E
                 id: isNew ? null : targetMerchandise?.id,
                 name,
                 price,
-                description,
+                description
               })
             }).then(async (response: Response) => {
               if (!response.ok) throw new Error((await response.json()).message)
