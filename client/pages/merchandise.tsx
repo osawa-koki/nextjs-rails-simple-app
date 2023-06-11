@@ -1,32 +1,35 @@
 import React, { useState } from 'react'
+// @ts-expect-error: No types available.
+import { NotificationManager } from 'react-notifications'
 
 import useSWR from 'swr'
 import { Alert, Button, Table } from 'react-bootstrap'
 import Layout from '../components/Layout'
 import setting from '../setting'
 import { isAbsent, isPresent } from '../src/util'
-import { emptyFunction, fetcher } from '../src/const'
+import { fetcher } from '../src/const'
 import Pagination from '../components/Pagination'
-import MakerEditor from '../components/MakerEditor'
+import MerchandiseEditor from '../components/MerchandiseEditor'
 
-export interface IMaker {
+export interface IMerchandise {
   id: number
   name: string
-  country: string
-  founding_date: Date
+  price: number
+  description: string
+  is_available: boolean
   created_at: Date
   updated_at: Date
 }
 
-export default function MakerPage (): JSX.Element {
+export default function MerchandisePage (): JSX.Element {
   const [page, setPage] = useState(1)
 
   const [showEditor, setShowEditor] = useState(false)
-  const [targetMaker, setTargetMaker] = useState<IMaker | null>(null)
+  const [targetMerchandise, setTargetMerchandise] = useState<IMerchandise | null>(null)
 
   const { data, error, mutate }: {
     data: {
-      makers: IMaker[]
+      merchandises: IMerchandise[]
       pagination: {
         current_page: number
         next_page: number | null
@@ -37,7 +40,7 @@ export default function MakerPage (): JSX.Element {
     }
     error: any
     mutate: any
-  } = useSWR(`${setting.apiPath}/api/maker?page=${page}`, fetcher, {
+  } = useSWR(`${setting.apiPath}/api/merchandise?page=${page}`, fetcher, {
     revalidateOnFocus: false,
     dedupingInterval: 10000
   })
@@ -48,7 +51,7 @@ export default function MakerPage (): JSX.Element {
 
   return (
     <Layout>
-      <div id="Maker">
+      <div id="Merchandise">
         {
           isPresent(error)
             ? <Alert variant="danger" className="m-3">Error: {error.message}</Alert>
@@ -61,30 +64,28 @@ export default function MakerPage (): JSX.Element {
                       <tr>
                         <th>id</th>
                         <th>name</th>
-                        <th>country</th>
-                        <th>founding_date</th>
+                        <th>price</th>
                         <th>delete</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {isPresent(data.makers) && Array.from({ length: 5 }).map((_, index) => (
+                      {isPresent(data.merchandises) && Array.from({ length: 5 }).map((_, index) => (
                         <tr key={index}>
-                          {isPresent(data.makers[index])
+                          {isPresent(data.merchandises[index])
                             ? (
                             <>
                               <td>
                                 <a onClick={(event: any) => {
                                   event.preventDefault()
-                                  setTargetMaker(data.makers[index])
+                                  setTargetMerchandise(data.merchandises[index])
                                   setShowEditor(true)
-                                }} href={`?target=${data.makers[index].id}`}>{data.makers[index].id}</a>
+                                }} href={`?target=${data.merchandises[index].id}`}>{data.merchandises[index].id}</a>
                               </td>
-                              <td>{data.makers[index].name}</td>
-                              <td>{data.makers[index].country}</td>
-                              <td>{data.makers[index].founding_date.toString()}</td>
+                              <td>{data.merchandises[index].name}</td>
+                              <td>$ {data.merchandises[index].price}</td>
                               <td><Button variant="outline-danger" size="sm" onClick={() => {
                                 if (!confirm('Delete???')) return
-                                fetch(`${setting.apiPath}/api/maker/${data.makers[index].id}`, {
+                                fetch(`${setting.apiPath}/api/merchandise/${data.merchandises[index].id}`, {
                                   method: 'DELETE'
                                 }).then(() => {
                                   NotificationManager.success('データを削除しました。')
@@ -116,26 +117,27 @@ export default function MakerPage (): JSX.Element {
                 {
                   showEditor
                     ? (
-                    <MakerEditor
+                    <MerchandiseEditor
                       modalIsOpen={showEditor}
                       closeModal={() => { setShowEditor(false) }}
                       afterSubmit={() => { mutate(); setShowEditor(false) }}
-                      targetMaker={targetMaker}
+                      targetMerchandise={targetMerchandise}
                     />
                       )
                     : (
                     <Button variant="primary" className="d-block mt-3 m-auto w-100" onClick={() => {
                       setShowEditor(true)
-                      setTargetMaker(null)
+                      setTargetMerchandise(null)
                     }}>新規作成</Button>
                       )
                 }
                 <Button variant="outline-danger" className="d-block mt-3 m-auto w-100" size="sm" onClick={() => {
                   if (!confirm('Delete All???')) return
-                  fetch(`${setting.apiPath}/api/maker/-1`, {
+                  fetch(`${setting.apiPath}/api/merchandise/-1`, {
                     method: 'DELETE'
                   }).then(() => {
                     mutate()
+                    NotificationManager.success('すべてのデータを削除しました。')
                   }).catch(() => {
                     alert('Error')
                     NotificationManager.error('データの削除に失敗しました。')
