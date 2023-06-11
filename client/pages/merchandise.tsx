@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // @ts-expect-error: No types available.
 import { NotificationManager } from 'react-notifications'
 
@@ -10,6 +10,7 @@ import { isAbsent, isPresent } from '../src/util'
 import { fetcher } from '../src/const'
 import Pagination from '../components/Pagination'
 import MerchandiseEditor from '../components/MerchandiseEditor'
+import { useRouter } from 'next/router'
 
 export interface IMerchandise {
   id: number
@@ -23,6 +24,22 @@ export interface IMerchandise {
 
 export default function MerchandisePage (): JSX.Element {
   const [page, setPage] = useState(1)
+
+  const router = useRouter()
+  const [firstLock, setFirstLock] = useState(false)
+  useEffect(() => {
+    const _page = router.query.page
+    const page = (typeof _page === 'string' ? _page : _page?.join('')) ?? null
+    if (isPresent(page)) setPage(parseInt(page ?? '1'))
+    setFirstLock(true)
+  }, [router.query.page])
+  useEffect(() => {
+    if (!firstLock) return
+    router.replace({
+      pathname: '/merchandise',
+      query: { page }
+    })
+  }, [page])
 
   const [showEditor, setShowEditor] = useState(false)
   const [targetMerchandise, setTargetMerchandise] = useState<IMerchandise | null>(null)
