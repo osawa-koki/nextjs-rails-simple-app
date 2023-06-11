@@ -1,4 +1,6 @@
 import React, { type ReactNode } from 'react'
+// @ts-expect-error: No types available.
+import { NotificationContainer } from 'react-notifications'
 import Head from 'next/head'
 import setting from '../setting'
 import Menu from './Menu'
@@ -22,6 +24,8 @@ const Layout = ({ children, title = setting.title, menu = true, footer = true }:
       { menu ? <><main>{ children }</main><Menu /></> : children }
     </div>
     { footer && <footer><a href="https://github.com/osawa-koki" target='_blank' rel="noreferrer">@osawa-koki</a></footer> }
+    <div id='Modal'></div>
+    <NotificationContainer />
   </div>
 )
 
