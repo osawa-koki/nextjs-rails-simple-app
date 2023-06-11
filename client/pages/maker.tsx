@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
+// @ts-expect-error: No types available.
+import { NotificationManager } from 'react-notifications'
 
 import useSWR from 'swr'
 import { Alert, Button, Table } from 'react-bootstrap'
 import Layout from '../components/Layout'
 import setting from '../setting'
 import { isAbsent, isPresent } from '../src/util'
-import { emptyFunction, fetcher } from '../src/const'
+import { fetcher } from '../src/const'
 import Pagination from '../components/Pagination'
 import MakerEditor from '../components/MakerEditor'
 
@@ -86,7 +88,11 @@ export default function ContactPage (): JSX.Element {
                                 if (!confirm('Delete???')) return
                                 fetch(`${setting.apiPath}/api/maker/${data.makers[index].id}`, {
                                   method: 'DELETE'
-                                }).then(emptyFunction).catch(emptyFunction)
+                                }).then(() => {
+                                  NotificationManager.success('データを削除しました。')
+                                }).catch(() => {
+                                  NotificationManager.error('データの削除に失敗しました。')
+                                })
                                 mutate()
                               }}>削除</Button></td>
                             </>
@@ -131,8 +137,10 @@ export default function ContactPage (): JSX.Element {
                     method: 'DELETE'
                   }).then(() => {
                     mutate()
+                    NotificationManager.success('すべてのデータを削除しました。')
                   }).catch(() => {
                     alert('Error')
+                    NotificationManager.error('データの削除に失敗しました。')
                   })
                 }}>全削除</Button>
               </>
