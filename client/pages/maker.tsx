@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 // @ts-expect-error: No types available.
 import { NotificationManager } from 'react-notifications'
 
@@ -7,7 +8,7 @@ import { Alert, Button, Table } from 'react-bootstrap'
 import Layout from '../components/Layout'
 import setting from '../setting'
 import { isAbsent, isPresent } from '../src/util'
-import { fetcher } from '../src/const'
+import { emptyFunction, fetcher } from '../src/const'
 import Pagination from '../components/Pagination'
 import MakerEditor from '../components/MakerEditor'
 
@@ -22,6 +23,22 @@ export interface IMaker {
 
 export default function MakerPage (): JSX.Element {
   const [page, setPage] = useState(1)
+
+  const router = useRouter()
+  const [firstLock, setFirstLock] = useState(false)
+  useEffect(() => {
+    const _page = router.query.page
+    const page = (typeof _page === 'string' ? _page : _page?.join('')) ?? null
+    if (isPresent(page)) setPage(parseInt(page ?? '1'))
+    setFirstLock(true)
+  }, [router.query.page])
+  useEffect(() => {
+    if (!firstLock) return
+    router.replace({
+      pathname: '/maker',
+      query: { page }
+    }).then(emptyFunction).catch(emptyFunction)
+  }, [page])
 
   const [showEditor, setShowEditor] = useState(false)
   const [targetMaker, setTargetMaker] = useState<IMaker | null>(null)
