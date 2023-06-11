@@ -5,7 +5,7 @@ RUN yarn install
 COPY ./client .
 RUN yarn build
 
-FROM ruby:3.2.3 as server_build
+FROM ruby:3.2.2 as server_build
 WORKDIR /app
 EXPOSE 8000
 COPY ./server/Gemfile ./server/Gemfile.lock ./
