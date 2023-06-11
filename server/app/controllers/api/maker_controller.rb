@@ -1,7 +1,7 @@
 class Api::MakerController < ApplicationController
   def index
     page = params[:page].presence || 1
-    @makers = Maker.order(id: :asc).page(page).includes(:merchandises)
+    @makers = Maker.order(id: :asc).page(page)
     render json: {
       makers: @makers,
       pagination: {

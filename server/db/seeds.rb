@@ -7,4 +7,4 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 load(Rails.root.join("db", "seeds", "makers.rb"))
-load(Rails.root.join("db", "seeds", "merchandises.rb"))
+# load(Rails.root.join("db", "seeds", "merchandise.rb"))

@@ -12,25 +12,20 @@
 
 ActiveRecord::Schema[7.0].define(version: 2023_06_09_160214) do
   create_table "makers", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "country", null: false
-    t.date "founding_date", null: false
+    t.string "name"
+    t.string "country"
+    t.date "founding_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_makers_on_name", unique: true
   end
 
   create_table "merchandises", force: :cascade do |t|
-    t.string "name", null: false
-    t.integer "price", null: false
-    t.string "description", null: false
-    t.boolean "is_available", default: true, null: false
-    t.integer "maker_id", null: false
+    t.string "name"
+    t.integer "price"
+    t.string "description"
+    t.boolean "is_available"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["maker_id"], name: "index_merchandises_on_maker_id"
-    t.index ["name"], name: "index_merchandises_on_name", unique: true
   end
 
-  add_foreign_key "merchandises", "makers"
 end
