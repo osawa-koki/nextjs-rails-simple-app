@@ -37,7 +37,7 @@ export default function MakerPage (): JSX.Element {
     router.replace({
       pathname: '/maker',
       query: { page }
-    })
+    }).then(emptyFunction).catch(emptyFunction)
   }, [page])
 
   const [showEditor, setShowEditor] = useState(false)

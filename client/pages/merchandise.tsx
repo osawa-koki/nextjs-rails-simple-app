@@ -7,7 +7,7 @@ import { Alert, Button, Table } from 'react-bootstrap'
 import Layout from '../components/Layout'
 import setting from '../setting'
 import { isAbsent, isPresent } from '../src/util'
-import { fetcher } from '../src/const'
+import { emptyFunction, fetcher } from '../src/const'
 import Pagination from '../components/Pagination'
 import MerchandiseEditor from '../components/MerchandiseEditor'
 import { useRouter } from 'next/router'
@@ -38,7 +38,7 @@ export default function MerchandisePage (): JSX.Element {
     router.replace({
       pathname: '/merchandise',
       query: { page }
-    })
+    }).then(emptyFunction).catch(emptyFunction)
   }, [page])
 
   const [showEditor, setShowEditor] = useState(false)
